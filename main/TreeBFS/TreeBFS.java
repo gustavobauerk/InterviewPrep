@@ -10,8 +10,31 @@ public class TreeBFS {
         root.left.left = new TreeNode(9);
         root.right.left = new TreeNode(10);
         root.right.right = new TreeNode(5);
-        System.out.println(zigzag(root));
+        System.out.println(average(root));
     }
+
+    private static List<Double> average(TreeNode root) {
+        List<Double> result = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.add(root);
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            double sum = 0;
+            for (int i = 0; i < size; i++) {
+                TreeNode poll = queue.poll();
+                sum += poll.val;
+                if (poll.left != null) {
+                    queue.add(poll.left);
+                }
+                if (poll.right != null) {
+                    queue.add(poll.right);
+                }
+            }
+            result.add(sum / size);
+        }
+        return result;
+    }
+
 
     private static List<List<Integer>> zigzag(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
@@ -23,9 +46,9 @@ public class TreeBFS {
             List<Integer> list = new ArrayList<>();
             for (int i = 0; i < size; i++) {
                 TreeNode poll = queue.poll();
-                if(zig) {
+                if (zig) {
                     list.add(poll.val);
-                }else  {
+                } else {
                     list.add(0, poll.val);
                 }
                 if (poll.left != null) {
@@ -66,6 +89,7 @@ public class TreeBFS {
     }
 
 }
+
 class TreeNode {
     int val;
     TreeNode left;
