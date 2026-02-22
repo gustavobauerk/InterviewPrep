@@ -37,14 +37,31 @@ public class TreeDFSSum {
         return res;
     }
 
+    private static int findSumOfPathNumbers(TreeNode root) {
+        if(root == null) return 0;
+        return helper(root, 0);
+    }
+
+    private static int helper(TreeNode root, int value) {
+        if(root == null) return 0;
+        value = (value*10) + root.val;
+        if(root.left == null && root.right == null) {
+            return value;
+        }
+        int helperLeft = helper(root.left, value);
+        int helperRight = helper(root.right, value);
+        return helperLeft + helperRight;
+    }
+
+
     public static void main(String[] args) {
-        TreeNode treeNode = new TreeNode(12);
-        treeNode.left = new TreeNode(7);
+        TreeNode treeNode = new TreeNode(1);
+        treeNode.left = new TreeNode(0);
         treeNode.right = new TreeNode(1);
-        treeNode.left.left = new TreeNode(4);
-        treeNode.left.right = new TreeNode(4);
-        treeNode.right.left = new TreeNode(10);
-        treeNode.right.right = new TreeNode(10);
-        System.out.println(hasPath(treeNode, 23));
+        treeNode.left.left = new TreeNode(1);
+        treeNode.right.left = new TreeNode(6);
+        treeNode.right.right = new TreeNode(5);
+        System.out.println(hasPath(treeNode, 8));
+        System.out.println(findSumOfPathNumbers(treeNode));
     }
 }
